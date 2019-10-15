@@ -29,7 +29,28 @@ class Group {
             Write-Warning "Role $($Role.Name) is already in group $($this.Name)."
         }
     }
-    [void]RemoveRole() { }
-    [void]AddMember() { }
-    [void]RemoveMember() { }
+    [void]RemoveRole([Role]$Role) {
+        if ($this.Roles.ContainsKey($Role.ID)) {
+            $this.Roles.Remove($Role)
+        }
+        else {
+            Write-Warning "Role $($Role.Name) is not in group $($this.Name)."
+        }
+    }
+    [void]AddMember([User]$User) {
+        if (!$this.Members.ContainsKey($User.ID)) {
+            $this.Members.Add($User.ID, $User)
+        }
+        else {
+            Write-Warning "User $($User.Name) is already in group $($this.Name)."
+        }
+    }
+    [void]RemoveMember([User]$User) {
+        if ($this.Members.ContainsKey($User.ID)) {
+            $this.Members.Remove($User.ID, $User)
+        }
+        else {
+            Write-Warning "User $($User.Name) is not in group $($this.Name)."
+        }
+    }
 }
